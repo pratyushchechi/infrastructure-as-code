@@ -1,12 +1,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation Template to deploy an EC2 instance
+
+Parameters:
+  AmiId:
+    Description: "The AMI ID for the EC2 instance"
+    Type: String
+  KeyName:
+    Description: "The name of the SSH key pair"
+    Type: String
+
 Resources:
   MyEC2Instance:
     Type: 'AWS::EC2::Instance'
     Properties:
-      InstanceType: 't2.micro'                # Free-tier eligible instance type
-      ImageId: 'ami-0c55b159cbfafe1f0'        # Amazon Linux 2 AMI ID
-      KeyName: 'monitorssh'                # Replace with your SSH key pair name
+      InstanceType: 't2.micro'
+      ImageId: !Ref AmiId                 # Use the parameter for AMI ID
+      KeyName: !Ref KeyName               # Use the parameter for SSH key
       Tags:
         - Key: Name
           Value: MyFirstInstance
+
